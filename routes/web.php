@@ -8,5 +8,6 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/dashboard', [NoteController::class,'dasboard'])->middleware(['auth'])->name('dashboard');
+Route::post('criar_anotacao',[NoteController::class, 'create'])->middleware(['auth'])->name('create.note');
 
 require __DIR__.'/auth.php';

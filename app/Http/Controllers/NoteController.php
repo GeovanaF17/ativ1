@@ -10,6 +10,23 @@ class NoteController extends Controller
 {
     public function dasboard(){
         $notes = Note::where('user_id', Auth::user()->id)->get();
-        return view('dashboard', compact($notes));
+        return view('dashboard', compact('notes'));
     }
+    public function create( Request $request){
+        $request->validate([
+            'title'=>'required',
+            'content' =>'required',
+            'color'=>'required',
+        ],[
+            'required=' => 'O campo :attribute é obrigatório!'
+        ]);
+
+        $note = $request->except('_token');
+        $note['user_id'] = Auth::user()->id;
+        Note::create($note);
+
+        return back();
+    }
+
+
 }
